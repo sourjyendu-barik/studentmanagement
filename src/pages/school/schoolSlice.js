@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const schoolSlice = createSlice({
-  name: "schoolStatus",
+  name: "school",
   initialState: {
     schoolStats: null,
     topStudent: null,
