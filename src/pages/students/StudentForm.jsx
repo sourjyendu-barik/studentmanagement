@@ -52,9 +52,7 @@ const StudentForm = ({ exist = false, studentsData = {} }) => {
         await dispatch(updateStudentAsync(formData)).unwrap();
         clearForm();
       }
-      toast.success(
-        `student data ${exist ? "Upadted" : "Added"} successfully.`,
-      );
+      toast.success(`student data ${exist ? "Updted" : "Added"} successfully.`);
     } catch (error) {
       //dispatch() ?/?
       console.error(error);
