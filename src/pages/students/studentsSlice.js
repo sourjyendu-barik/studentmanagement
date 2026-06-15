@@ -59,6 +59,7 @@ const studentsSlice = createSlice({
     error: null,
     filter: "All",
     sortBy: "name",
+    studentClassFilter: "All",
   },
   reducers: {
     setFilter: (state, action) => {
@@ -66,6 +67,9 @@ const studentsSlice = createSlice({
     },
     setSortBy: (state, action) => {
       state.sortBy = action.payload;
+    },
+    setClass: (state, action) => {
+      state.studentClassFilter = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -123,4 +127,4 @@ const studentsSlice = createSlice({
   },
 });
 export default studentsSlice.reducer; //this is for importing in store
-export const { setFilter, setSortBy } = studentsSlice.actions; //this is for dispatching
+export const { setFilter, setSortBy, setClass } = studentsSlice.actions; //this is for dispatching

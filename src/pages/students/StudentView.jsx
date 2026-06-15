@@ -8,10 +8,13 @@ import Button from "../../components/Button";
 const StudentView = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(fetchStudents());
-  }, []);
   const students = useSelector((state) => state.students);
+
+  useEffect(() => {
+    if (students.status === "idle") {
+      dispatch(fetchStudents());
+    }
+  }, [dispatch, students.status]);
   //console.log("students is", students);
   return (
     <>
@@ -31,7 +34,6 @@ const StudentView = () => {
       </SectionContainer>
 
       <SectionContainer>
-        <h2>Student List</h2>
         <StudentList studentsList={students} />
       </SectionContainer>
     </>

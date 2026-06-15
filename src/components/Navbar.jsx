@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container">
-        <NavLink to={"/studentView"} className="navbar-brand" href="#">
+        <NavLink to={"/studentView"} className="navbar-brand">
           Student Management System
         </NavLink>
         <button
@@ -26,7 +26,6 @@ const Navbar = () => {
                 to={"/studentView"}
                 className="nav-link active"
                 aria-current="page"
-                href="#"
               >
                 Students
               </NavLink>
@@ -36,7 +35,6 @@ const Navbar = () => {
                 to={"classView"}
                 className="nav-link active"
                 aria-current="page"
-                href="#"
               >
                 Classes
               </NavLink>
@@ -46,9 +44,17 @@ const Navbar = () => {
                 to={"/schoolView"}
                 className="nav-link active"
                 aria-current="page"
-                href="#"
               >
                 School
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to={"/teacherView"}
+                className="nav-link active"
+                aria-current="page"
+              >
+                Teacher
               </NavLink>
             </li>
           </ul>

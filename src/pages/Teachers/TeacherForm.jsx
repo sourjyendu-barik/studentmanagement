@@ -1,30 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import InputBox from "../../components/InputBox";
-import SectionContainer from "../../components/SectionContainer";
+import { useState } from "react";
 import Button from "../../components/Button";
-import axios from "axios";
 import { useDispatch } from "react-redux";
-import { addStudentAsync, updateStudentAsync } from "./studentsSlice";
+import { addTeacherSync, updateTeacher } from "./teacherSlice";
+import SelectSubjects from "../../components/SelectSubjects";
 import { toast } from "react-toastify";
-const StudentForm = ({ exist = false, studentsData = {} }) => {
+const TeacherForm = ({ exist = false, teacherData = {} }) => {
   const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     name: "",
     age: "",
     gender: "",
-    marks: "",
     attendance: "",
-    grade: "",
-    studentClass: "",
+    experience: "",
+    subjects: [],
   });
   useEffect(() => {
-    if (exist && studentsData) {
+    if (exist && teacherData) {
+      //  console.log("useEffect running ", "teacherData is", teacherData, exist);
       setFormData((prev) => ({
         ...prev,
-        ...studentsData,
+        ...teacherData,
       }));
     }
-  }, [exist, studentsData]);
+  }, []);
   const onChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -34,63 +35,47 @@ const StudentForm = ({ exist = false, studentsData = {} }) => {
       name: "",
       age: "",
       gender: "",
-      marks: "",
       attendance: "",
-      grade: "",
-      studentClass: "",
+      experience: "",
+      subjects: "",
     });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("handle submit running");
-      //unwrap() throws the rejected thunk error so catch works correctly.
       if (!exist) {
-        dispatch(addStudentAsync(formData));
+        // console.log("creating new teacher");
+        await dispatch(addTeacherSync(formData));
         clearForm();
       } else {
-        await dispatch(updateStudentAsync(formData)).unwrap();
+        await dispatch(updateTeacher(formData));
         clearForm();
       }
       toast.success(
-        `student data ${exist ? "Upadted" : "Added"} successfully.`,
+        `Teachers data ${exist ? "Updated" : "Added"} successfully.`,
       );
     } catch (error) {
-      //dispatch() ?/?
       console.error(error);
-      toast.error(`student data failed to ${exist ? "update" : "add"}`);
+      toast.error(`Teachers data failed to ${exist ? "Updtae" : "Add"}`);
     }
   };
   return (
-    <SectionContainer>
-      <h1>{exist ? "Update Student" : "Add Student"}</h1>
+    <div>
       <form onSubmit={handleSubmit}>
         <InputBox
-          placeholder={"Name"}
+          placeholder={"Teacher's Name"}
           onChange={onChange}
           value={formData.name}
           name="name"
         />
         <InputBox
-          placeholder={"Age"}
+          placeholder={"Teacher's Age"}
           onChange={onChange}
           value={formData.age}
           name="age"
           type="number"
         />
-        <InputBox
-          placeholder={"Class"}
-          onChange={onChange}
-          value={formData.studentClass}
-          type="number"
-          name={"studentClass"}
-        />
-        <InputBox
-          placeholder={"Grade"}
-          onChange={onChange}
-          value={formData.grade}
-          name="grade"
-        />
+
         <div className="mb-2">
           <label className="me-2" htmlFor="gender">
             Gender :{" "}
@@ -103,7 +88,6 @@ const StudentForm = ({ exist = false, studentsData = {} }) => {
               checked={formData.gender === "Male"}
               onChange={onChange}
               id="male"
-              required
             />
             Male
           </label>
@@ -115,29 +99,34 @@ const StudentForm = ({ exist = false, studentsData = {} }) => {
               checked={formData.gender === "Female"}
               onChange={onChange}
               id="female"
-              required
             />
             Female
           </label>
         </div>
-        {exist && (
-          <>
-            <InputBox
-              placeholder={"Attendance"}
-              onChange={onChange}
-              value={formData.attendance}
-              name="attendance"
-              type="number"
-            />
-            <InputBox
-              placeholder={"Marks"}
-              onChange={onChange}
-              value={formData.marks}
-              name="marks"
-              type="number"
-            />
-          </>
-        )}
+
+        <InputBox
+          placeholder={"Attendance"}
+          onChange={onChange}
+          value={formData.attendance}
+          name="attendance"
+          type="number"
+        />
+        <InputBox
+          placeholder={"Experience"}
+          onChange={onChange}
+          value={formData.experience}
+          name="experience"
+          type="number"
+        />
+        <SelectSubjects
+          value={formData.subjects}
+          onChange={(subjects) =>
+            setFormData({
+              ...formData,
+              subjects,
+            })
+          }
+        />
         <Button
           name={exist ? "Update" : "Add"}
           type="submit"
@@ -145,10 +134,11 @@ const StudentForm = ({ exist = false, studentsData = {} }) => {
         />
       </form>
       {/* <p>
-        {formData.name} {formData.age} {formData.grade} {formData.gender}
+        {formData.name} {formData.age} {formData.attendance} {formData.gender}{" "}
+        {formData.experience}
       </p> */}
-    </SectionContainer>
+    </div>
   );
 };
 
-export default StudentForm;
+export default TeacherForm;

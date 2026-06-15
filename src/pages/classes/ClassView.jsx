@@ -1,87 +1,86 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import SectionContainer from "../../components/SectionContainer";
-import { useDispatch, useSelector } from "react-redux";
-import { setFilter, setSortBy } from "../students/studentsSlice";
+import Loading from "../../components/Loading";
+import ErrorMessage from "../../components/ErrorMessage";
+import Button from "../../components/Button";
+import { useNavigate } from "react-router";
 const ClassView = () => {
-  const studentsList = useSelector((state) => state.students);
-  const dispatch = useDispatch();
-  const { students, status, error, filter, sortBy } = studentsList;
+  const [classes, setClasses] = useState([]);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  if (status === "loading") {
-    return <Loading message={"Students data is loading......."} />;
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await axios.get(
+          "https://student-management-system-kappa-blush.vercel.app/classSummary",
+        );
+
+        setClasses(response.data?.data);
+      } catch (err) {
+        setError(err.response?.data?.message || err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchClasses();
+  }, []);
+
+  if (loading) {
+    return <Loading message={"Class data loading"} />;
   }
-  if (status === "error") {
+
+  if (error) {
     return <ErrorMessage message={error} />;
   }
-
-  const filteredStudents = students.filter((s) => {
-    if (filter === "Male") {
-      return s.gender === "Male";
-    }
-    if (filter === "Female") {
-      return s.gender === "Female";
-    }
-    return true;
-  });
-  // console.log(students);
-  // console.log(filteredStudents);
-  const sortedStudents = [...filteredStudents].sort((a, b) => {
-    switch (sortBy) {
-      case "name":
-        return a.name.localeCompare(b.name);
-      case "marks":
-        return a.marks - b.marks;
-      case "attendance":
-        return a.attendance - b.attendance;
-        return 0;
-    }
-  });
-  const handleFilter = (e) => {
-    dispatch(setFilter(e.target.value));
-  };
-  const handleSort = (e) => {
-    dispatch(setSortBy(e.target.value));
-  };
+  //console.log(classes, loading, error);
+  console.log(classes);
   return (
-    <>
-      <SectionContainer>
-        <h1>Class view</h1>
-        <div className="mb-2">
-          <label className="me-2" htmlFor="gender">
-            Filter By Gender :
-          </label>
-          <select name="gender" id="gender" onChange={handleFilter}>
-            {/* <option value="Male">Male</option>
-            <option value="Female">Female</option> */}
-            <option value="All">All</option>
-            <option value="Male">Boys</option>
-            <option value="Female">Girls</option>
-          </select>
-        </div>
-        <div className="mb-2">
-          <label className="me-2" htmlFor="sort">
-            Sort By :
-          </label>
-          <select name="sort" id="sort" onChange={handleSort}>
-            <option value="name">Name</option>
-            <option value="marks">Marks</option>
-            <option value="attendance">Attendance</option>
-          </select>
-        </div>
-      </SectionContainer>
-      <SectionContainer>
-        {sortedStudents.map((s) => {
-          const { _id, name, gender, marks, attendance } = s;
-          return (
-            <li key={`student___${_id}`}>
-              <p>
-                {name} - {gender} - Marks:{marks} - Attendance: {attendance}%
-              </p>
-            </li>
-          );
-        })}
-      </SectionContainer>
-    </>
+    <SectionContainer>
+      <h2>Classes</h2>
+
+      {/* {classes.length === 0 ? (
+        <p>No classes found.</p>
+      ) : (
+        classes.map((item, index) => (
+          <div key={`class${index}`}>
+            <h4>{item.name}</h4>
+          </div>
+        ))
+      )} */}
+      <div className="row">
+        {classes.map((c, index) => (
+          <div
+            className="col-md-4 mb-2"
+            key={`class${index}`}
+            style={{ height: "100%" }}
+          >
+            <div className="card">
+              <div className="card-body">
+                <h3>{c?.className ? c.className : "Class name not added"}</h3>
+                <p>Total Students: {c?.totalStudents}</p>
+                <p>Boys : {c?.boys}</p>
+                <p>Girls : {c?.girls}</p>
+                <p>
+                  Topper : {c?.topper?.name}({c?.topper?.marks}%)
+                </p>
+                <p>Average attendance : {c?.avgAttendance}%</p>
+                <Button
+                  name={`View students of ${c?.className}`}
+                  onClick={() => navigate(`/classStudents/${c?.className}`)}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </SectionContainer>
   );
 };
 
