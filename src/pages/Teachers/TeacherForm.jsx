@@ -56,7 +56,7 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
       );
     } catch (error) {
       console.error(error);
-      toast.error(`Teachers data failed to ${exist ? "Updtae" : "Add"}`);
+      toast.error(`Teachers data failed to ${exist ? "Update" : "Add"}`);
     }
   };
   return (
