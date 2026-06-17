@@ -20,8 +20,13 @@ const TeacherrsView = () => {
 
   return (
     <SectionContainer>
-      <Button name={"Add teacher"} onClick={() => navigate("/addTeacher")} />
-      <h1>Teachers View</h1>
+      <h1 text-center>Teachers View</h1>
+      <Button
+        name={"Add teacher"}
+        color="secondary"
+        onClick={() => navigate("/addTeacher")}
+      />
+
       <TeacherList teacherList={teachers} />
     </SectionContainer>
   );

@@ -7,7 +7,7 @@ const TeacherList = ({ teacherList }) => {
   if (fetchStatus === "loading") {
     return <Loading message={"Teachers data is loading......."} />;
   }
-  if (status === "error") {
+  if (fetchStatus === "error") {
     return <ErrorMessage message={error} />;
   }
   return (
@@ -30,9 +30,9 @@ const TeacherList = ({ teacherList }) => {
     //     </li>
     //   ))}
     // </ul>
-    <div className="row">
+    <div className="row g-4">
       {teachers.map((t) => (
-        <div key={t._id} className="col-sm-6 col-md-4 col-lg-3">
+        <div key={t._id} className="col-12 col-sm-6 col-md-4">
           <div className="card h-100 border-0 shadow-sm rounded-4">
             <div className="card-body d-flex flex-column">
               <h5 className="card-title fw-bold text-dark">{t.name}</h5>
