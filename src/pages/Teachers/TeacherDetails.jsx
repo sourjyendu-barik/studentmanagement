@@ -57,7 +57,7 @@ const TeacherDetails = () => {
           <h3>{details?.name}</h3>
           <p>Age : {details?.age}</p>
           <p>Gender : {details?.gender}</p>
-          <p>Attendance : {details?.attendance}</p>
+          <p>Attendance : {details?.attendance}%</p>
           <p>Experience :{details?.experience}</p>
           <p>Subjects: {details?.subjects?.join(", ")}</p>
           <div className="d-flex gap-3">

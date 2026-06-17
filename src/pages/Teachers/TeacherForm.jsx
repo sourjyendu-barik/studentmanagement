@@ -25,10 +25,13 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
         ...teacherData,
       }));
     }
-  }, []);
+  }, [exist, teacherData]);
   const onChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "number" ? (value === "" ? "" : Number(value)) : value,
+    }));
   };
   const clearForm = () => {
     setFormData({
@@ -37,11 +40,38 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
       gender: "",
       attendance: "",
       experience: "",
-      subjects: "",
+      subjects: [],
     });
+  };
+  const validateForm = () => {
+    const { name, age, gender, attendance, experience } = formData;
+    if (name.trim().length < 2) {
+      return "Name must contain at least 2 characters";
+    }
+    if (age < 20 || age > 120) {
+      return "Age must be between 20 and 120";
+    }
+    if (attendance < 0 || attendance > 100) {
+      return "Attendance must between 0 and 100";
+    }
+    if (experience < 0 || experience > 100) {
+      return "Experience must between 0 and 100";
+    }
+    if (experience > age) {
+      return "Experience can't greater than age";
+    }
+    if (!gender) {
+      return "Please select a gender";
+    }
+    return null;
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errorInformdata = validateForm();
+    if (errorInformdata) {
+      toast.error(errorInformdata);
+      return;
+    }
     try {
       if (!exist) {
         // console.log("creating new teacher");
@@ -69,6 +99,9 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
           name="name"
           pattern="[A-Za-z ]+"
           title="Only letters and spaces are allowed"
+          minLength={2}
+          maxLength={40}
+          required
         />
         <InputBox
           placeholder={"Teacher's Age"}
@@ -76,6 +109,9 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
           value={formData.age}
           name="age"
           type="number"
+          min="20"
+          max="120"
+          required
         />
 
         <div className="mb-2">
@@ -90,6 +126,7 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
               checked={formData.gender === "Male"}
               onChange={onChange}
               id="male"
+              required
             />
             Male
           </label>
@@ -101,6 +138,7 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
               checked={formData.gender === "Female"}
               onChange={onChange}
               id="female"
+              required
             />
             Female
           </label>
@@ -112,6 +150,9 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
           value={formData.attendance}
           name="attendance"
           type="number"
+          min="0"
+          max="100"
+          required
         />
         <InputBox
           placeholder={"Experience"}
@@ -119,6 +160,9 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
           value={formData.experience}
           name="experience"
           type="number"
+          min="0"
+          max="100"
+          required
         />
         <SelectSubjects
           value={formData.subjects}
@@ -128,13 +172,14 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
               subjects,
             })
           }
+          required
         />
         <div className="d-flex justify-content-center mt-3">
           <div className="col-12 col-md-5">
             <Button
               name={exist ? "Update Teacher Details" : "Add New Teacher"}
               type="submit"
-              color={exist ? "secondary" : "primary"}
+              color={exist ? "success" : "primary"}
               className="w-100"
             />
           </div>

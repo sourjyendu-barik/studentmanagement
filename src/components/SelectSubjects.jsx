@@ -16,6 +16,7 @@ const SelectSubjects = ({ value, onChange }) => {
       </label>
       <Select
         isMulti
+        required={true}
         options={subjectOptions}
         value={subjectOptions.filter((option) => value.includes(option.value))}
         onChange={(selectedOptions) =>

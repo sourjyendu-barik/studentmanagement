@@ -23,7 +23,6 @@ const InputBox = ({
         name={name}
         onChange={onChange}
         className="form-control"
-        required
         {...props}
       />
     </div>
