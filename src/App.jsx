@@ -7,7 +7,7 @@ function App() {
       <header>
         <Navbar />
       </header>
-      <main>
+      <main className="py-3">
         <Outlet />
       </main>
       <Footer />

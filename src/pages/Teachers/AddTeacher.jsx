@@ -5,7 +5,7 @@ import TeacherForm from "./TeacherForm";
 const AddTeacher = () => {
   return (
     <SectionContainer>
-      <h1>Add New Teacher</h1>
+      <h1 className="text-center">Add New Teacher</h1>
       <TeacherForm exist={false} />
     </SectionContainer>
   );

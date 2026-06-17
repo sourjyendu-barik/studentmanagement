@@ -8,7 +8,7 @@ const UpdateTeacher = () => {
   //console.log(teacherData);
   return (
     <SectionContainer>
-      <h1>Upadte Teacher Details</h1>
+      <h1 className="text-center">Upadte Teacher Details</h1>
       <TeacherForm exist={true} teacherData={teacherData} />
     </SectionContainer>
   );

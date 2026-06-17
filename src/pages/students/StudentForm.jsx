@@ -53,23 +53,29 @@ const StudentForm = ({ exist = false, studentsData = {} }) => {
         clearForm();
       }
       toast.success(
-        `student data ${exist ? "Updated" : "Added"} successfully.`,
+        `Students data ${exist ? "updated" : "added"} successfully`,
       );
     } catch (error) {
       //dispatch() ?/?
       console.error(error);
-      toast.error(`student data failed to ${exist ? "update" : "add"}`);
+      toast.error(
+        `Students data ${exist ? "failed to update" : "failed to added"}`,
+      );
     }
   };
   return (
     <SectionContainer>
-      <h1>{exist ? "Update Student" : "Add Student"}</h1>
+      <h1 className="text-center">
+        {exist ? "Update Student" : "Add Student"}
+      </h1>
       <form onSubmit={handleSubmit}>
         <InputBox
           placeholder={"Name"}
           onChange={onChange}
           value={formData.name}
           name="name"
+          pattern="[A-Za-z ]+"
+          title="Only letters and spaces are allowed"
         />
         <InputBox
           placeholder={"Age"}
@@ -138,11 +144,16 @@ const StudentForm = ({ exist = false, studentsData = {} }) => {
             />
           </>
         )}
-        <Button
-          name={exist ? "Update" : "Add"}
-          type="submit"
-          color={exist ? "secondary" : "primary"}
-        />
+        <div className="d-flex justify-content-center mt-3">
+          <div className="col-12 col-md-5">
+            <Button
+              name={exist ? "Update Student Details" : "Add New Student"}
+              type="submit"
+              color={exist ? "secondary" : "primary"}
+              className="w-100"
+            />
+          </div>
+        </div>
       </form>
       {/* <p>
         {formData.name} {formData.age} {formData.grade} {formData.gender}

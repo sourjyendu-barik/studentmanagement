@@ -2,7 +2,7 @@ import React from "react";
 
 const SectionContainer = ({ children }) => {
   return (
-    <section>
+    <section className="py-3">
       <div className="container">{children}</div>
     </section>
   );

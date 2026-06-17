@@ -67,6 +67,8 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
           onChange={onChange}
           value={formData.name}
           name="name"
+          pattern="[A-Za-z ]+"
+          title="Only letters and spaces are allowed"
         />
         <InputBox
           placeholder={"Teacher's Age"}
@@ -127,11 +129,16 @@ const TeacherForm = ({ exist = false, teacherData = {} }) => {
             })
           }
         />
-        <Button
-          name={exist ? "Update" : "Add"}
-          type="submit"
-          color={exist ? "secondary" : "primary"}
-        />
+        <div className="d-flex justify-content-center mt-3">
+          <div className="col-12 col-md-5">
+            <Button
+              name={exist ? "Update Teacher Details" : "Add New Teacher"}
+              type="submit"
+              color={exist ? "secondary" : "primary"}
+              className="w-100"
+            />
+          </div>
+        </div>
       </form>
       {/* <p>
         {formData.name} {formData.age} {formData.attendance} {formData.gender}{" "}

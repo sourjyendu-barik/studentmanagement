@@ -19,7 +19,7 @@ const StudentView = () => {
   return (
     <>
       <SectionContainer>
-        <h1>Student View</h1>
+        <h1 className="text-center">Student View</h1>
         {/* <button
           className="btn btn-warning"
           onClick={() => navigate("/addstudent")}
