@@ -24,11 +24,18 @@ const StudentForm = ({ exist = false, studentsData = {} }) => {
       }));
     }
   }, [exist, studentsData]);
+  // const onChange = (e) => {
+  //   const { name, value, type } = e.target;
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: type === "number" ? Number(value) : value,
+  //   }));
+  // };
   const onChange = (e) => {
     const { name, value, type } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "number" ? Number(value) : value,
+      [name]: type === "number" ? (value === "" ? "" : Number(value)) : value,
     }));
   };
   const clearForm = () => {
