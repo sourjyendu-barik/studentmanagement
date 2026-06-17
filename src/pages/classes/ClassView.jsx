@@ -33,7 +33,7 @@ const ClassView = () => {
   }, []);
 
   if (loading) {
-    return <Loading message={"Class data loading"} />;
+    return <Loading message={"Class summary  loading"} />;
   }
 
   if (error) {
@@ -43,7 +43,7 @@ const ClassView = () => {
   console.log(classes);
   return (
     <SectionContainer>
-      <h1 className="text-center">Classes Summary</h1>
+      <h1 className="text-center mb-3">Classes Summary</h1>
 
       {/* {classes.length === 0 ? (
         <p>No classes found.</p>
@@ -54,14 +54,23 @@ const ClassView = () => {
           </div>
         ))
       )} */}
-      <div className="row">
+      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {classes.map((c, index) => (
           <div
             className="col-md-4 mb-2"
             key={`class${index}`}
             style={{ height: "100%" }}
           >
-            <div className="card">
+            <div
+              className="card mb-3 h-100 d-flex flex-column justify-content-between"
+              style={{
+                background: "linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%)",
+                border: "1px solid #CBD5E1",
+                borderRadius: "12px",
+                padding: "20px",
+                color: "#1E293B",
+              }}
+            >
               <div className="card-body">
                 <h3>{c?.className ? c.className : "Class name not added"}</h3>
                 <p>Total Students: {c?.totalStudents}</p>

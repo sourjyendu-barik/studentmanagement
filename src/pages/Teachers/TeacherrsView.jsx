@@ -20,7 +20,7 @@ const TeacherrsView = () => {
 
   return (
     <SectionContainer>
-      <h1 text-center>Teachers View</h1>
+      <h1 className="text-center">Teachers View</h1>
       <Button
         name={"Add teacher"}
         color="secondary"

@@ -44,8 +44,15 @@ const TeacherDetails = () => {
   };
   return (
     <SectionContainer>
-      <h1>Teacher Details</h1>{" "}
-      <div className="card" style={{ maxWidth: "300px" }}>
+      <h1 className="text-center">Teacher Details</h1>{" "}
+      <div
+        className="card mx-auto mb-3"
+        style={{
+          width: "100%",
+          maxWidth: "500px",
+          background: "linear-gradient(135deg, #FFF7ED, #FFEDD5)",
+        }}
+      >
         <div className="card-body">
           <h3>{details?.name}</h3>
           <p>Age : {details?.age}</p>

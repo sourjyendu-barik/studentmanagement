@@ -30,10 +30,15 @@ const TeacherList = ({ teacherList }) => {
     //     </li>
     //   ))}
     // </ul>
-    <div className="row g-4">
+    <div className="row g-4 mt-3">
       {teachers.map((t) => (
         <div key={t._id} className="col-12 col-sm-6 col-md-4">
-          <div className="card h-100 border-0 shadow-sm rounded-4">
+          <div
+            className="card h-100 border-0 shadow-sm rounded-4"
+            style={{
+              background: "linear-gradient(135deg, #EEF4FF, #DCEBFF)",
+            }}
+          >
             <div className="card-body d-flex flex-column">
               <h5 className="card-title fw-bold text-dark">{t.name}</h5>
               <p className="card-text text-muted mb-4">
@@ -41,7 +46,7 @@ const TeacherList = ({ teacherList }) => {
               </p>
               <Link
                 to={`/teacherDetail/${t._id}`}
-                className="btn btn-primary w-50"
+                className="btn btn-secondary w-50"
               >
                 View Details
               </Link>{" "}
