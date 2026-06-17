@@ -14,10 +14,12 @@ import studentReducers from "../pages/students/studentsSlice";
 //import studentsSlice from "../features/studentsSlice";
 import schoolReducer from "../pages/school/schoolSlice";
 import teacherReducer from "../pages/Teachers/teacherSlice";
+import classReducer from "../pages/classes/classSummary";
 export default configureStore({
   reducer: {
     students: studentReducers,
     school: schoolReducer,
     teachers: teacherReducer,
+    classSummary: classReducer,
   },
 });
