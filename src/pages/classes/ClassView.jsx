@@ -43,7 +43,7 @@ const ClassView = () => {
   console.log(classes);
   return (
     <SectionContainer>
-      <h2>Classes</h2>
+      <h1 className="text-center">Classes Summary</h1>
 
       {/* {classes.length === 0 ? (
         <p>No classes found.</p>
